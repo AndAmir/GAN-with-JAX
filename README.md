@@ -1,7 +1,7 @@
- <font size="6"><b> Generative adversarial network using JAX</font>
- <font size="4"> Andrew Amirov, Thomas Devries </font> 
- <font size="3">March 24, 2022</font> 
-  
+** Generative adversarial network using JAX**
+Andrew Amirov, Thomas Devries
+March 24, 2022
+
 ---
 
 #### Abstract: Briefly describe your problem, approach, and key results. Should be no more than 300 words.
