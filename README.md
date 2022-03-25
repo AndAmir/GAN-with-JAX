@@ -1,6 +1,6 @@
-**Generative Adversarial Network using JAX**
-Andrew Amirov, Thomas Devries
-March 24, 2022
+# **Generative Adversarial Network using JAX**
+### Andrew Amirov, Thomas Devries
+### March 24, 2022
 
 ---
 
