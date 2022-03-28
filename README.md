@@ -1,19 +1,20 @@
 # **Generative Adversarial Network using JAX**
-### Andrew Amirov, Thomas Devries
+### Andrew Amirov, Thomas Devries, Bassam Ali
 ### March 24, 2022
 
 ---
+We will be tackling the problem of “I’m Something of a Painter Myself”, a Kaggle competition based around using GAN’s to create art. It’s an interesting task because of the dual trainers and the cycling between them.
 
-#### Abstract: Briefly describe your problem, approach, and key results. Should be no more than 300 words.
-    
-#### Introduction (10%): Describe the problem you are working on, why it’s important, and an overview of your results
-    
-####  Related Work (10%): Discuss published work that relates to your project. How is your approach similar or different from others?
-    
-####  Data (10%): Describe the data you are working with for your project. What type of data is it? Where did it come from? How much data are you working with? Did you have to do any preprocessing, filtering, or other special treatment to use this data in your project?
-    
-#### Methods (30%): Discuss your approach for solving the problems that you set up in the introduction. Why is your approach the right thing to do? Did you consider alternative approaches? You should demonstrate that you have applied ideas and skills built up during the quarter to tackling your problem of choice. It may be helpful to include figures, diagrams, or tables to describe your method or compare it with other methods.
-    
-####  Experiments (30%): Discuss the experiments that you performed to demonstrate that your approach solves the problem. The exact experiments will vary depending on the project, but you might compare with previously published methods, perform an ablation study to determine the impact of various components of your system, experiment with different hyperparameters or architectural choices, use visualization techniques to gain insight into how your model works, discuss common failure modes of your model, etc. You should include graphs, tables, or other figures to illustrate your experimental results.
-    
-#### Conclusion (5%) Summarize your key results - what have you learned? Suggest ideas for future extensions or new applications of your ideas.
+For context and background, we have to look no further than the Kaggle page and all the resources available within, from recommended tutorials to other groups’ code on the matter; but we’re going to. JAX’s github and reference pages, our destination for everything on JAX and how it functions. We’re also looking at other github pages related to the topic at hand, and for a front to back breakdown of GANs; developers.google has us covered. 
+
+https://www.kaggle.com/competitions/gan-getting-started/overview 
+https://github.com/google/jax
+https://jax.readthedocs.io/en/latest/index.html
+https://junyanz.github.io/CycleGAN/
+https://developers.google.com/machine-learning/gan
+
+For our data, we’re using a dataset of Monet art(300), and a dataset of photos to generate from(7028), both provided by Kaggle, sized to 256x256, in JPEG format. We can add other photos to the generation dataset, so long as the dataset stays under 10,000, and it follows the same formatting rules. 
+
+We want to have a style transfer of Monet images to any other image. So we will be looking to implement a CycleGAN. Our reasoning for using CycleGAN as opposed to other GANs is that our dataset consists of uncorrelated images, which CycleGAN is built for these types of problems. We are looking at existing implementations, mainly from the following github repository, https://junyanz.github.io/CycleGAN/ . We will modify this by implementing the algorithm using the JAX framework. Implementing this in JAX will allow us to run the training and inference on either CPU,GPU,or TPU’s; and take advantage of the efficiencies of running it on GPU or TPU’s.
+ 
+Qualitativly we expect to generate images using our GAN similar to Monet’s paintings. Qualitatively to evaluate our model we will use MiFID (Memorization-informed Fréchet Inception Distance), a modified version of Fréchet Inception Distance (FID). This is a measure of how similar two generated images are with less similar images being better. MiFID expands on FID by accounting for sample memorization and making sure that the images are not too similar to the original data. More information as well as the exact formulas for MiFID can be found here.
