@@ -7,11 +7,11 @@ We will be tackling the problem of “I’m Something of a Painter Myself”, a 
 
 For context and background, we have to look no further than the Kaggle page and all the resources available within, from recommended tutorials to other groups’ code on the matter; but we’re going to. JAX’s github and reference pages, our destination for everything on JAX and how it functions. We’re also looking at other github pages related to the topic at hand, and for a front to back breakdown of GANs; developers.google has us covered. 
 
-https://www.kaggle.com/competitions/gan-getting-started/overview 
-https://github.com/google/jax
-https://jax.readthedocs.io/en/latest/index.html
-https://junyanz.github.io/CycleGAN/
-https://developers.google.com/machine-learning/gan
+https://www.kaggle.com/competitions/gan-getting-started/overview  
+https://github.com/google/jax  
+https://jax.readthedocs.io/en/latest/index.html  
+https://junyanz.github.io/CycleGAN/  
+https://developers.google.com/machine-learning/gan  
 
 For our data, we’re using a dataset of Monet art(300), and a dataset of photos to generate from(7028), both provided by Kaggle, sized to 256x256, in JPEG format. We can add other photos to the generation dataset, so long as the dataset stays under 10,000, and it follows the same formatting rules. 
 
