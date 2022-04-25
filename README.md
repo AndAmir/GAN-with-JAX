@@ -33,23 +33,30 @@ Our problem was to take photographs and transform them to look like Monet's pain
 Our project's value is demonstrating the capabilities of synthetic data generation and spreading awareness of what it can do. Synthetic data can be used to help train models when there is a lack of usable or unique data. Companies like Tesla have been known to use synthetic data while training their self-driving cars. The implementation of this project in JAX could help to quickly create accurate datasets for rare events. Key features of JAX are its ability to be run on any hardware, and its low-level abstraction. While we were able to get some basic convolutions set up for the generator and discriminator in Haiku we underestimated the scope of this project and were not able to complete a full implementation. More details will be provided in the experiments section.
 
 ### Related Work 
-- Unpaired Image-to-Image Translation using Cycle-Consistent Adversarial Networks(pdf)
+- Unpaired Image-to-Image Translation using Cycle-Consistent Adversarial Networks([pdf](https://arxiv.org/pdf/1703.10593.pdf))
   - This published work is the basis for CycleGANs. It demonstrates many of the possible use cases for a CycleGAN including Zebras to horses, apples to oranges, and photo’s to paintings. The paper demonstrates many different photo to painting conversions and photo to Monet is one of them.
 
-- CycleGAN implementation from scratch(link)
+- CycleGAN implementation from scratch(link](https://www.youtube.com/watch?v=4LktBHGCNfw))
   - This video details how to implement a CycleGAN using the Pytorch library. In the video, Aladdin Persson explains the step-by-step process of creating a CycleGAN that converts images of horses to zebras. We were able to create a proof of concept project based on this and attempted to convert it to a JAX Haiku implementation.
 
 ### Data
 Our dataset consists of 300 Monet artworks and 7028 photos provided by Kaggle. The images are 256x256 JPEGs. This is what was provided but there was an option to add photos as long as the dataset is less than 10,000 images. We did not do this as our largest hurdle was the train time for a CycleGAN. We did use PyTorch data loaders to transform the data and convert it into an array that was easier to work with.
 
 ### Methods 
-For style transfer problems like ours, the go-to method is a CycleGAN. This problem, converting photos to Monets, actually comes from the paper Unpaired Image-to-Image Translation using Cycle-Consistent Adversarial Networks. The paper details the architecture of a CycleGAN and its uses. CycleGANs are able to learn the mapping from a source domain, photo, and convert it into the target domain, Monet. A CycleGAN will also learn the inverse mapping to convert a Monet to a photo. The CycleGAN takes these two mappings, F: PM and G: MP , and runs (x)G(x)F(G(x)) with the photo x. This cycle converts a photo, to a Monet, back to a photo. You can then compare the generated photo the original and get a cycle-consistancy loss. Getting the cycle consistency loss for (p)G(p)F(G(p)) and (m)F(m)G(F(m)) where p is a photo and m is a monet, we are able to check that the model is preserving the important features in our data. This ensures that we are doing a style transfer and not just generating a random Monte. 
+For style transfer problems like ours, the go-to method is a CycleGAN. This problem, converting photos to Monets, actually comes from the paper Unpaired Image-to-Image Translation using Cycle-Consistent Adversarial Networks. The paper details the architecture of a CycleGAN and its uses. CycleGANs are able to learn the mapping from a source domain, photo, and convert it into the target domain, Monet. A CycleGAN will also learn the inverse mapping to convert a Monet to a photo. The CycleGAN takes these two mappings, F: P-->M and G: M-->P , and runs (x)-->G(x)-->F(G(x)) with the photo x. This cycle converts a photo, to a Monet, back to a photo. You can then compare the generated photo the original and get a cycle-consistancy loss. Getting the cycle consistency loss for (p)-->G(p)-->F(G(p)) and (m)-->F(m)-->G(F(m)) where p is a photo and m is a monet, we are able to check that the model is preserving the important features in our data. This ensures that we are doing a style transfer and not just generating a random Monte. 
  
  To do a style transfer we need two types of CNNs a Generator that is able to create an image in a certain style, and a Discriminator that is able to do image classification. We then set up generators G and F to map into the domains X and Y as shown below.
+ 
+ <img src="https://github.com/AndAmir/GAN-with-JAX/blob/main/ReadMEimages/CycleGAN.jpg" height=200>
+ 
 The discriminators, Dx and Dy, attempt to determine if the generated image fits into the domain. 
 We then use the generated images to train the discriminators and the discriminators to train the generators. We can also take a deeper look at the architecture of these models. 
 
+<img src="https://github.com/AndAmir/GAN-with-JAX/blob/main/ReadMEimages/Generator.jpg" height=600>
+
 The above is the architecture of the Generator model. The first 3 convolution layers downsample the key aspects of the initial image. The first uses 64 filters with 7 by 7 kernels and a stride of 1, the next two layers consist of 128 and 256 filters respectively with each convolution using 3 by 3 kernels and a stride of 2. Then the next 6 layers convert the initial image(Ex. photograph) to the style of the other image(Ex. photograph styled as Monet); each of these convolutions consists of 256 filters with a kernel size of 3 by 3, and a stride of 1. Then the next 2 layers upsample into our final image size using 128 and 64 filters respectively, a 3 by 3 kernel and a stride of 2. The last layer transposes our final image into RGB.
+
+<img src="https://github.com/AndAmir/GAN-with-JAX/blob/main/ReadMEimages/Discriminator.jpg" height=600>
 
 The above is the architecture of the Discriminator. The first four convolutions use 64,128,256, and 512 filters respectively; with 4 by 4 kernels and strides of 2. After each of these layers, there is a leaky ReLU regularization. The last layer consists of 1 filter with a 4 by 4 kernel and a stride of 1. Then a Sigmoid function is used to determine the binary classification.
 
