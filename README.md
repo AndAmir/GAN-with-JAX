@@ -36,7 +36,7 @@ Our project's value is demonstrating the capabilities of synthetic data generati
 - Unpaired Image-to-Image Translation using Cycle-Consistent Adversarial Networks([pdf](https://arxiv.org/pdf/1703.10593.pdf))
   - This published work is the basis for CycleGANs. It demonstrates many of the possible use cases for a CycleGAN including Zebras to horses, apples to oranges, and photo’s to paintings. The paper demonstrates many different photo to painting conversions and photo to Monet is one of them.
 
-- CycleGAN implementation from scratch(link](https://www.youtube.com/watch?v=4LktBHGCNfw))
+- CycleGAN implementation from scratch([link](https://www.youtube.com/watch?v=4LktBHGCNfw))
   - This video details how to implement a CycleGAN using the Pytorch library. In the video, Aladdin Persson explains the step-by-step process of creating a CycleGAN that converts images of horses to zebras. We were able to create a proof of concept project based on this and attempted to convert it to a JAX Haiku implementation.
 
 ### Data
