@@ -50,7 +50,7 @@ We began implementing our model using Haiku; but when testing, we ran into a pro
 This project was a serious learning experience in how large frameworks make the very complex tasks seem simple to implement. It was interesting to see how different models used in tandem can solve more complex problems. This experience taught us to be more careful when considering the scope of our project. We chose a project that would be exciting to work on but failed to consider the true scope of our project which ended up being our downfall. In the future, we may be able to revisit this project and implement the features we were not able to get working.
 
 ---
-# **Generative Adversarial Network using JAX**
+# **Proposal**
 ### Andrew Amirov, Thomas Devries, Bassam Ali
 ### March 24, 2022
 
